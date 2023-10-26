@@ -142,7 +142,7 @@
     }
 
     .deleteButton{
-        background-color: red;
+        background-color: pink;
     }
   </style>
   
