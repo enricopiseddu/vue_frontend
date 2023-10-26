@@ -22,7 +22,7 @@
     <br> 
 
       <div>
-        <table class="center">
+        <table class="center table-auto">
             <thead>
                 <tr>
                     <th>ID</th>

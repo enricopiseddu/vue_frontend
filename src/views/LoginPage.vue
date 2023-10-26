@@ -1,7 +1,7 @@
 <template>
     <div id="app">
 
-      <h1>Login</h1>
+      <h1 class="mt-16">Login</h1>
       <div id="alert" v-if="alert">{{ alert }}</div>
   
       <form @submit.prevent="onSubmit" class="bg-white shadow-md rounded px-3 pt-6 pb-8 mb-4">
@@ -10,9 +10,7 @@
           <div class="mt-2">
             <label class="me-auto text-gray-700 text-sm font-bold mb-2"> Username </label>
           </div>
-            
           <input type="text" v-model="username" class="mt-4 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
-            
         </div>
 
         <div class="mx-auto">
@@ -22,7 +20,7 @@
           <input type="password" v-model="password" class="mt-4 shadow appearance-none border rounded  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
         </div>
         
-        <button type="button" class="mt-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Log in</button>
+        <button type="button" class="mt-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none dark:focus:ring-blue-800">Log in</button>
       </form>
   
       <div>
