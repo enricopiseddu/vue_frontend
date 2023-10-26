@@ -1,7 +1,7 @@
 <template>
     <div id="app">
 
-      <h1>Login</h1>
+      <h1 class="mt-5">Login</h1>
       <div id="alert" v-if="alert">{{ alert }}</div>
   
       <form @submit.prevent="onSubmit">
@@ -100,5 +100,6 @@
   <style scoped>
   @import 'bootstrap/dist/css/bootstrap.css';
   
-  </style>
+
+   </style>
   

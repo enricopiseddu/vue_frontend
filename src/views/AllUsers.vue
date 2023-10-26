@@ -1,7 +1,7 @@
 <template>
     <div id="app">
 
-      <h1>All users</h1>
+      <h1 class="mt-5">All users</h1>
       
       <form @submit.prevent="onSubmit">
         
