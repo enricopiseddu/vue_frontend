@@ -39,7 +39,8 @@
         </div>
         
       </form>
-  
+      
+      <h2 v-if="userRegistered">You have been registered</h2>
     </div>
 </template>
   
@@ -53,7 +54,8 @@
           return {
               username: '', //v-model in template
               password: '',
-              repeatedPassword: ''
+              repeatedPassword: '',
+              userRegistered : false
           }
       },
 
@@ -99,8 +101,10 @@
               "Content-type": "application/json; charset=UTF-8",
             }
           }
-        ).then(response =>
-          console.log(response)
+        ).then(response =>{
+          console.log(response);
+          this.userRegistered = true;
+        }
         );
   
         
