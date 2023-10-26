@@ -16,34 +16,34 @@
 
         <br>
         
-        <button type="submit">Send token</button>
+        <button type="submit" class="btn btn-secondary">Send token</button>
       </form>
   
     <br> 
 
-      <div>
-        <table class="center">
+    
+        <table class="table">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Username</th>
-                    <th>Hashed password</th>
-                    <th>Azioni</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Hashed password</th>
+                    <th scope="col">Azioni</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="item in usersReturned" :key="item.id">
-                    <td>{{ item.id }}</td>
+                    <th scope="row">{{ item.id }}</th>
                     <td>{{ item.username }}</td>
                     <td>{{ item.password }}</td>
-                    <td> <button class="deleteButton" @click="deleteUser(item.id)">Elimina</button></td>
+                    <td> <button class="btn btn-danger" @click="deleteUser(item.id)">Elimina</button></td>
                 </tr>
             </tbody>
         </table>
         
       </div>
 
-    </div>
+    
 </template>
   
   <script>
@@ -128,21 +128,5 @@
   </script>
   
   <style scoped>
-  .center {
-    margin-left: auto;
-    margin-right: auto;
-    }
 
-    table{
-    border:1px solid black;
-    }
-
-    table td{
-    border:1px solid black;
-    }
-
-    .deleteButton{
-        background-color: pink;
-    }
   </style>
-  

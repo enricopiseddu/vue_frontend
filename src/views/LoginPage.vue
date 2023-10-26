@@ -6,30 +6,30 @@
   
       <form @submit.prevent="onSubmit">
         
-        <div>
-            <label>
+        <div class="form-group">
+            <label for="username">
               Username
-              <input type="text" v-model="username" />
+              <input id="username" type="text" v-model="username" class="form-control" />
             </label>
         </div>
 
         <br>
 
-        <div>
-          <label>
+        <div class="form-group">
+          <label for="password">
             Password
-            <input type="password" v-model="password" />
+            <input id="password" type="password" v-model="password" class="form-control" />
           </label>
         </div>
         
         <br>
         
   
-        <button type="submit">Log in</button>
+        <button type="submit" class="btn btn-success">Login</button>
       </form>
-  
+      <br>
       <div>
-        <p>Your token JWT is {{ jwtreceived }}</p>
+        <p>Your token JWT is <br> {{ jwtreceived }}</p>
       </div>
     </div>
 </template>
@@ -98,6 +98,7 @@
   </script>
   
   <style scoped>
+  @import 'bootstrap/dist/css/bootstrap.css';
   
   </style>
   

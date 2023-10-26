@@ -6,28 +6,28 @@
   
       <form @submit.prevent="onSubmit">
 
-        <div>
-            <label>
+        <div class="form-group">
+            <label for="username">
                 Username
-                <input type="text" v-model="username" />
+                <input id="username" type="text" v-model="username" class="form-control" />
             </label>
         </div>
 
         <br>
         
-        <div>
-            <label>
+        <div class="form-group">
+            <label for="password1">
                 Password
-                <input type="password" v-model="password" />
+                <input id="password1" type="password" v-model="password" class="form-control" />
             </label>
         </div>
         
         <br>
 
-        <div>
-            <label>
+        <div class="form-group">
+            <label for="password2">
                 Repeat password
-                <input type="password" v-model="repeatedPassword" />
+                <input id="password2" type="password" v-model="repeatedPassword" class="form-control" />
             </label>
         </div>
         
@@ -35,7 +35,7 @@
         <br> 
 
         <div>
-            <button type="submit">Sign Up</button>
+            <button type="submit" class="btn btn-primary">Sign Up</button>
         </div>
         
       </form>
@@ -116,6 +116,7 @@
   </script>
   
   <style scoped>
-  
+ 
+
   </style>
   
