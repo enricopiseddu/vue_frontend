@@ -1,42 +1,52 @@
 <template>
     <div id="app">
 
-      <h1>All users</h1>
+      <h1 class="mt-16">All users</h1>
       
-      <form @submit.prevent="onSubmit">
+      <form @submit.prevent="onSubmit" class="bg-white px-3 pt-6 pb-8">
         
-        <div>
-            <label>
-              Insert your JWT to see all users
-              <div>
-                <input type="text" v-model="jwttoken" />
-              </div>
-            </label>
+        <div class="mx-auto">
+            <div class="mt-2">
+                <label class="me-auto text-gray-700 text-sm font-bold mb-2"> Insert your JWT to see all users </label>
+            </div>
+            <input type="text" v-model="jwttoken" class="mt-4 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
         </div>
 
-        <br>
-        
-        <button type="submit">Send token</button>
+        <button type="submit" class="mt-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none dark:focus:ring-blue-800">Send token</button>
       </form>
-  
-    <br> 
+
 
       <div>
-        <table class="center table-auto">
-            <thead>
+        <table class="m-6 text-sm text-left text-gray-500 rounded-md center border-spacing-0">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr>
-                    <th>ID</th>
-                    <th>Username</th>
-                    <th>Hashed password</th>
-                    <th>Azioni</th>
+                    <th scope="col" class="px-6 py-3"> 
+                        ID 
+                    </th>
+                    <th scope="col" class="px-6 py-3"> 
+                        Username 
+                    </th>
+                    <th scope="col" class="px-6 py-3"> 
+                        Hashed password 
+                    </th>
+                    <th scope="col" class="px-6 py-3"> 
+                        Azioni 
+                    </th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in usersReturned" :key="item.id">
-                    <td>{{ item.id }}</td>
-                    <td>{{ item.username }}</td>
-                    <td>{{ item.password }}</td>
-                    <td> <button class="deleteButton" @click="deleteUser(item.id)">Elimina</button></td>
+                <tr v-for="item in usersReturned" :key="item.id" class="bg-white border-b">
+                    <td scope="row" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap">
+                        {{ item.id }}
+                    </td>
+                    <td scope="row" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap">
+                        {{ item.username }}
+                    </td>
+                    <td scope="row" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap">
+                        {{ item.password }}
+                    </td>
+                    <td> 
+                        <button type="button" class="mt-0 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-0 focus:outline-none dark:focus:ring-blue-800" @click="deleteUser(item.id)">Elimina</button></td>
                 </tr>
             </tbody>
         </table>

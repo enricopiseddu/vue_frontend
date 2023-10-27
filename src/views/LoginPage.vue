@@ -4,7 +4,7 @@
       <h1 class="mt-16">Login</h1>
       <div id="alert" v-if="alert">{{ alert }}</div>
   
-      <form @submit.prevent="onSubmit" class="bg-white shadow-md rounded px-3 pt-6 pb-8">
+      <form @submit.prevent="onSubmit" class="bg-white px-3 pt-6 pb-8">
         
         <div class="mx-auto">
           <div class="mt-2">
@@ -91,8 +91,3 @@
     }
   }
   </script>
-  
-  <style scoped>
-  
-  </style>
-  
