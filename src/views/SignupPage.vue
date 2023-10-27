@@ -1,7 +1,7 @@
 <template>
     <div id="app">
 
-      <h1 class="mt-5">Sign up</h1>
+      <h1 class="mt-5">Sign up</h1> 
       <div id="alert" v-if="alert">{{ alert }}</div>
   
       <form @submit.prevent="onSubmit">

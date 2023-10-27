@@ -16,10 +16,13 @@
     >
       <!-- Left links -->
       <ul class="navbar-nav mb-2 mb-lg-0">
-        <li class="nav-item">
+        <li v-if="storeUser.isLogged" class="nav-item">
+            <div class="nav-link active" aria-current="page" to="/">Benvenuto, {{ storeUser.getUsername }}</div>
+        </li>
+        <li v-if="!storeUser.isLogged" class="nav-item">
             <router-link class="nav-link active" aria-current="page" to="/">Login</router-link>
         </li>
-        <li class="nav-item">
+        <li v-if="!storeUser.isLogged" class="nav-item">
             <router-link class="nav-link active" aria-current="page" to="/signup">Signup</router-link>
         </li>
         <li class="nav-item">
@@ -39,12 +42,22 @@
 
 
 <script>
+import { useUserStore} from '@/store/userStore';
+
 
 export default {
   name: 'App',
+
+  data(){
+          return{
+              storeUser : useUserStore()
+              //jwtreceived: ''
+          }
+    },
   components: {
 
   }
+  
 }
 </script>
 
