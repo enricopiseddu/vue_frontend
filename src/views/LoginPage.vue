@@ -28,23 +28,27 @@
         <button type="submit" class="btn btn-success">Login</button>
       </form>
       <br>
-      <div>
-        <p>Your token JWT is <br> {{ jwtreceived }}</p>
-      </div>
+      <!-- <div>
+        <p>Your token JWT is <br> {{ storeUser.getToken }}</p>
+      </div> -->
     </div>
 </template>
   
   <script>
   
   import axios from 'axios';
+  import { useUserStore} from '@/store/userStore';
   
+  const storeUser = useUserStore();
+  
+
   export default {
     name: 'LoginForm',
     data(){
           return {
               username: '', //v-model in template
               password: '',
-              jwtreceived: ''
+              //jwtreceived: ''
           }
     },
 
@@ -55,7 +59,7 @@
   
       onSubmit(e){
         e.preventDefault()
-  
+        
         if(!this.username){
             alert('Please insert username')
             return
@@ -82,7 +86,11 @@
           }
         ).then(response =>{
           console.log(response);
-          this.jwtreceived = response.data.token;
+          //this.jwtreceived = response.data.token;
+          storeUser.setToken(response.data.token);
+          console.log(storeUser.getToken);
+          
+
           }
         );
   
