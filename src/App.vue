@@ -19,13 +19,13 @@
         <li v-if="storeUser.isLogged" class="nav-item">
             <div class="nav-link active" aria-current="page" to="/">Benvenuto, {{ storeUser.getUsername }}</div>
         </li>
-        <li  class="nav-item">
+        <li  class="nav-item" v-if="!storeUser.isLogged">
             <router-link class="nav-link active" aria-current="page" to="/">Login</router-link>
         </li>
-        <li  class="nav-item">
+        <li  class="nav-item" v-if="!storeUser.isLogged">
             <router-link class="nav-link active" aria-current="page" to="/signup">Signup</router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-if="storeUser.isLogged">
             <router-link class="nav-link active" aria-current="page" to="/users">See all users</router-link>
         </li>
 
@@ -56,11 +56,10 @@ export default {
   data(){
           return{
               storeUser : useUserStore()
-              //jwtreceived: ''
           }
     },
 
-    methods:{
+  methods:{
 
       logout(){
         this.storeUser.setToken('');
@@ -70,14 +69,10 @@ export default {
 
         this.$router.push('/');
       }
-
-
-
     },
+    
   components: {
-
   }
-  
 }
 </script>
 

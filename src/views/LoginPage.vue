@@ -48,7 +48,6 @@
               username: '', //v-model in template
               password: '',
               storeUser : useUserStore()
-              //jwtreceived: ''
           }
     },
 
@@ -96,7 +95,7 @@
             }
           }
         ).then(response =>{
-          console.log(response);
+          //console.log(response);
 
           if(response.data.token != undefined){
             //this.jwtreceived = response.data.token;
@@ -105,9 +104,9 @@
             //console.log( this.parseJwt(this.storeUser.getToken) );
             this.setStore(this.storeUser.getToken);
 
-            console.log(this.storeUser);
+            //console.log(this.storeUser);
 
-            console.log(this.storeUser.isLogged);
+            //console.log(this.storeUser.isLogged);
 
             this.$router.push('/users');
             

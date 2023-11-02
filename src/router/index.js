@@ -21,7 +21,7 @@ const routes = [
 
     beforeEnter: (to, from, next) => {
 
-      console.log('jwt token is ' + useUserStore().getToken);
+      //console.log('jwt token is ' + useUserStore().getToken);
 
       if (!useUserStore().isLogged ) {
         next(); // Consenti l'accesso
@@ -37,7 +37,7 @@ const routes = [
     component: AllUsers,
     beforeEnter: (to, from, next) => {
 
-      console.log('jwt token is ' + useUserStore().getToken);
+      //console.log('jwt token is ' + useUserStore().getToken);
 
       if (useUserStore().isLogged) {
         next(); // Consenti l'accesso
