@@ -28,6 +28,10 @@
         <li class="nav-item">
             <router-link class="nav-link active" aria-current="page" to="/users">See all users</router-link>
         </li>
+
+        <li class="nav-item" v-if = "storeUser.isLogged">
+            <button class="btn btn-secondary" @click="logout">Logout</button>
+        </li>
       </ul>
       <!-- Left links -->
     </div>
@@ -45,6 +49,7 @@
 import { useUserStore} from '@/store/userStore';
 
 
+
 export default {
   name: 'App',
 
@@ -53,6 +58,21 @@ export default {
               storeUser : useUserStore()
               //jwtreceived: ''
           }
+    },
+
+    methods:{
+
+      logout(){
+        this.storeUser.setToken('');
+        this.storeUser.setUsername('');
+        this.storeUser.setUser('');
+
+
+        this.$router.push('/');
+      }
+
+
+
     },
   components: {
 
