@@ -23,7 +23,7 @@ const routes = [
 
       console.log('jwt token is ' + useUserStore().getToken);
 
-      if (!useUserStore().isLogged) {
+      if (!useUserStore().isLogged ) {
         next(); // Consenti l'accesso
       } else {
         next(from);
