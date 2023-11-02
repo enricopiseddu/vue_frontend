@@ -64,7 +64,7 @@
       setStore(token){
         const jwtParsed = this.parseJwt(token);
 
-        this.storeUser.setUsername(jwtParsed.username);
+        this.storeUser.setUsername(jwtParsed.name);
       },
   
       onSubmit(e){
@@ -103,6 +103,8 @@
             console.log(this.storeUser.getToken);
             //console.log( this.parseJwt(this.storeUser.getToken) );
             this.setStore(this.storeUser.getToken);
+
+            console.log(this.storeUser);
           }
         }
         );
