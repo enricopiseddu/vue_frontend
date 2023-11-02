@@ -7,27 +7,25 @@ export const useUserStore = defineStore({
     userId: '',
     username: ''
   }),
+
   actions: {
-    setToken(token){
-      this.jwt = token;
+    setToken(_jwt){
+      this.jwt = _jwt;
     },
 
-    setUser(id){
-      this.userId = id;
+    setUser(_userId){
+      this.userId = _userId; 
     },
 
-    setUsername(username){
-        this.username = username;
-      },
-    
-
-
+    setUsername(_username){
+        this.username = _username;  
+    }
   },
 
   getters: {
     getToken: (state) => {
       return state.jwt;
-    },
+    }, 
 
     getUserId: (state) => {
         return state.userId;

@@ -19,10 +19,10 @@
         <li v-if="storeUser.isLogged" class="nav-item">
             <div class="nav-link active" aria-current="page" to="/">Benvenuto, {{ storeUser.getUsername }}</div>
         </li>
-        <li v-if="!storeUser.isLogged" class="nav-item">
+        <li  class="nav-item">
             <router-link class="nav-link active" aria-current="page" to="/">Login</router-link>
         </li>
-        <li v-if="!storeUser.isLogged" class="nav-item">
+        <li  class="nav-item">
             <router-link class="nav-link active" aria-current="page" to="/signup">Signup</router-link>
         </li>
         <li class="nav-item">

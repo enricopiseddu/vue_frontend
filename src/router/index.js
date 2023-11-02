@@ -5,6 +5,8 @@ import SignupPage from "@/views/SignupPage.vue";
 import PageNotFound from "@/views/PageNotFound.vue"
 import AllUsers from "@/views/AllUsers.vue"
 
+import {useUserStore} from "../store/userStore"
+
 const routes = [
   {
     path: "/",
@@ -14,14 +16,35 @@ const routes = [
 
   {
     path: "/signup",
-    name: "AboutPage",
+    name: "Signup",
     component: SignupPage,
+
+    beforeEnter: (to, from, next) => {
+
+      console.log('jwt token is ' + useUserStore().getToken);
+
+      if (!useUserStore().isLogged) {
+        next(); // Consenti l'accesso
+      } else {
+        next(from);
+      }
+    }
   },
 
   {
     path: "/users",
     name: "Users",
     component: AllUsers,
+    beforeEnter: (to, from, next) => {
+
+      console.log('jwt token is ' + useUserStore().getToken);
+
+      if (useUserStore().isLogged) {
+        next(); // Consenti l'accesso
+      } else {
+        next('/'); // Reindirizza all'area di login
+      }
+    }
   },
 
   {
@@ -29,6 +52,7 @@ const routes = [
     component: PageNotFound,
   },
 ];
+
 
 const router = createRouter({
   history: createWebHistory(),

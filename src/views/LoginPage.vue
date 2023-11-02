@@ -65,6 +65,7 @@
         const jwtParsed = this.parseJwt(token);
 
         this.storeUser.setUsername(jwtParsed.name);
+        
       },
   
       onSubmit(e){
@@ -105,6 +106,11 @@
             this.setStore(this.storeUser.getToken);
 
             console.log(this.storeUser);
+
+            console.log(this.storeUser.isLogged);
+
+            this.$router.push('/users');
+            
           }
         }
         );
