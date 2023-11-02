@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia'
+import { useStorage } from '@vueuse/core'
 
 export const useUserStore = defineStore({
     id:'userStore',
     state: () => ({
-      jwt : '',
-      userId: '',
-      username: ''
+      jwt : useStorage('jwt', ''),
+      userId: useStorage('userId', ''),
+      username: useStorage('username', '')
     }),
     actions: {
       setToken(_jwt){

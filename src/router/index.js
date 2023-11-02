@@ -57,7 +57,7 @@ router.beforeEach((to, from, next) => {
   const isProtectedNotAuth = protectedRoutesNotAuth.includes(to.name)
   //const isProtectedAuth = protectedRoutesAuth.includes(to.name)
   
-  if(isProtectedNotAuth && !useUserStore().isLogged && from.name == "LoginPage"){
+  if(isProtectedNotAuth && !useUserStore().isLogged /* && from.name == "LoginPage" */){
       next({
           path: '/',
           query: { redirect: to.fullPath }
