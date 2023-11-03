@@ -80,7 +80,7 @@
   
         
         axios.post(
-          "http://localhost:5000/signup",
+          `${process.env.VUE_APP_BACKEND_URL}/signup`,
           {
             username: this.username,
             password: this.password
@@ -90,9 +90,15 @@
               "Content-type": "application/json; charset=UTF-8",
             }
           }
-        ).then(response =>
-          console.log(response)
-        );
+        ).then(response =>{
+          console.log(response);
+          alert("Ti sei registrato con successo!");
+          this.$router.push({ path: "/" });
+
+        }
+        ).catch(() =>{
+          alert("Username già esistente")
+        });
   
         
         //clear the form

@@ -29,7 +29,7 @@ export const useUserStore = defineStore({
       
       async login(username, password){
         axios.post(
-          `${process.env.VUE_APP_BACKEND_URL}`,
+          `${process.env.VUE_APP_BACKEND_URL}/`,
           {
             username: username,
             password: password,
@@ -49,12 +49,14 @@ export const useUserStore = defineStore({
             
           }
           }
-        );
+        ).catch(() =>{
+            alert("Credenziali non valide");
+        });
       },
 
       allUsers(token){
         axios.get(
-          `${process.env.VUE_APP_BACKEND_URL}users`,
+          `${process.env.VUE_APP_BACKEND_URL}/users`,
           {
               headers: {
                   "x-auth-token": token
