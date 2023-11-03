@@ -36,9 +36,8 @@
   
   <script>
   
-  import axios from 'axios'; 
   import { useUserStore} from '@/store/userStore';
-  import {Buffer} from 'buffer';
+ 
   
   
   export default {
@@ -56,18 +55,7 @@
 
     methods: {
 
-      parseJwt (token) {
-        return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
-      },
-
-      setStore(token){
-        const jwtParsed = this.parseJwt(token);
-
-        this.storeUser.setUsername(jwtParsed.name);
-        
-      },
-  
-      onSubmit(e){
+      async onSubmit(e){
         e.preventDefault()
 
         if(!this.username){
@@ -80,45 +68,18 @@
             return
         }
   
-        console.log(this.username + ' ' + this.password);
+        console.log('data from the form:' +this.username + ' ' + this.password);
   
         
-        axios.post(
-          "http://localhost:5000/",
-          {
-            username: this.username,
-            password: this.password
-          },
-          {
-            headers: {
-              "Content-type": "application/json; charset=UTF-8",
-            }
-          }
-        ).then(response =>{
-          //console.log(response);
+        const logged = await this.storeUser.login(this.username, this.password);
 
-          if(response.data.token != undefined){
-            //this.jwtreceived = response.data.token;
-            this.storeUser.setToken(response.data.token);
-            console.log(this.storeUser.getToken);
-            //console.log( this.parseJwt(this.storeUser.getToken) );
-            this.setStore(this.storeUser.getToken);
-
-            //console.log(this.storeUser);
-
-            //console.log(this.storeUser.isLogged);
-
-            this.$router.push('/users');
-            
-          }
+        if(logged){
+          this.$router.push('/users');
         }
-        );
-  
         
         //clear the form
         this.username= '';
         this.password= '';
-        
       }
   
     }

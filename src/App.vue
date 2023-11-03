@@ -60,12 +60,8 @@ export default {
     },
 
   methods:{
-
-      logout(){
-        this.storeUser.setToken('');
-        this.storeUser.setUsername('');
-        this.storeUser.setUser('');
-
+       logout(){
+        this.storeUser.logout();
 
         this.$router.push('/');
       }

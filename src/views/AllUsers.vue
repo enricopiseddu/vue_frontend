@@ -31,7 +31,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in usersReturned" :key="item.id">
+                <tr v-for="item in storeUser.getListOfUsers" :key="item.id">
                     <th scope="row">{{ item.id }}</th>
                     <td>{{ item.username }}</td>
                     <td>{{ item.password }}</td>
@@ -48,6 +48,7 @@
   <script>
   
   import axios from 'axios';
+  import { useUserStore} from '@/store/userStore';
 
   export default {
     name: 'AllUsers',
@@ -55,13 +56,14 @@
     data(){
           return {
               jwttoken: '', //v-model in template
-              usersReturned: [] //users returned by the API
+              usersReturned: [], //users returned by the API
+              storeUser : useUserStore()
           }
     },
 
 
     methods: {
-        onSubmit(e){
+        async onSubmit(e){
             e.preventDefault()
     
             if(!this.jwttoken){
@@ -70,36 +72,12 @@
             }
     
             console.log(this.jwttoken);
-            
-            axios.get(
-            "http://localhost:5000/users",
-            {
-                headers: {
-                    "x-auth-token": this.jwttoken
-                }
-            }
-            ).then(response =>{
-                console.log(response);
-                
-                this.usersReturned = response.data;
-            }
-            ).catch(error => {
-                
-                // Handle the error here
-                if (error.response) {
-                    // The request was made, but the server responded with a status code other than 2xx
-                    console.log('Response data:', error.response.data);
-                    console.log('Response status:', error.response.status);
-                } else if (error.request) {
-                    // The request was made, but no response was received
-                    console.log('No response received');
-                } else {
-                    // Something happened in setting up the request that triggered an error
-                    console.error('Error:', error.message);
-                }
-            });
-    
-            
+
+
+            await this.storeUser.getAllUsers(this.jwttoken);
+
+            console.log(this.storeUser.getAllUsers);
+                      
             //clear the form
             this.username= '';
             this.password= '';
