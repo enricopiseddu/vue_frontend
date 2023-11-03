@@ -95,7 +95,7 @@
         console.log('vuoi cancellare l utente ' + idToDelete);
 
         axios.delete(
-            "http://localhost:5000/users/" + idToDelete,
+            process.env.VUE_APP_BACKEND_URL+ "users" + idToDelete,
             {
             }
             ).then(response =>{

@@ -74,29 +74,6 @@
           this.$router.push({ path: "/users" });
         }
 
-        /* axios.post(
-          "http://localhost:5000/",
-          {
-            username: this.username,
-            password: this.password
-          },
-          {
-            headers: {
-              "Content-type": "application/json; charset=UTF-8",
-            }
-          }
-        ).then(response =>{
-          console.log(response);
-          //this.jwtreceived = response.data.token;
-          if(response.data.token != undefined){
-            this.storeUser.setToken(response.data.token);
-            //console.log(this.storeUser.getToken);
-            this.$router.push({ path: "/users" })
-          }
-          }
-        ); */
-  
-        
         //clear the form
         this.username= '';
         this.password= '';

@@ -29,7 +29,7 @@ export const useUserStore = defineStore({
       
       async login(username, password){
         axios.post(
-          "http://localhost:5000/",
+          `${process.env.VUE_APP_BACKEND_URL}`,
           {
             username: username,
             password: password,
@@ -54,7 +54,7 @@ export const useUserStore = defineStore({
 
       allUsers(token){
         axios.get(
-          "http://localhost:5000/users",
+          `${process.env.VUE_APP_BACKEND_URL}users`,
           {
               headers: {
                   "x-auth-token": token
