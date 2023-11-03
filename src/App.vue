@@ -12,6 +12,7 @@
         <router-link to="/" class="block lg:inline-block lg:mt-0 text-blue-200 hover:text-white mr-4">Login</router-link>
         <router-link to="/signup" class="block lg:inline-block lg:mt-0 text-blue-200 hover:text-white mr-4">Sign up</router-link>
         <router-link to="/users" class="block lg:inline-block lg:mt-0 text-blue-200 hover:text-white mr-4">Show Users</router-link>
+        <button type="submit" @click="logout"> Logout </button>
       </div>
 
     </div>
@@ -25,13 +26,33 @@
 
 
 <script>
+import { useUserStore } from '@/store/userStore';
 
 export default {
   name: 'App',
+  data(){
+          return {
+              storeUser: useUserStore()
+          }
+    },
   components: {
 
+  },
+  methods:{
+
+    logout(){
+      this.storeUser.setToken('');
+      this.storeUser.setUsername('');
+      this.storeUser.setUserId('');
+
+      this.$router.push({ path: "/" })
+    }
   }
 }
+
+
+
+
 </script>
 
 <style>
