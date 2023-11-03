@@ -43,13 +43,16 @@ export const useUserStore = defineStore({
       this.setToken('');
       this.setUsername('');
       this.setUser('');
+      this.usersReturnedByAPI=[];
     },
 
 
     //CHIAMATE AL BACKEND
     login(_username, _password){
+
+      //console.log('variabile ' + `${process.env.VUE_APP_BACKEND_URL}`);
       axios.post(
-        "http://localhost:5000/",
+        process.env.VUE_APP_BACKEND_URL,
         {
           username: _username,
           password: _password
@@ -79,7 +82,7 @@ export const useUserStore = defineStore({
     getAllUsers(token){
 
       axios.get(
-        "http://localhost:5000/users",
+        process.env.VUE_APP_BACKEND_URL + 'users',
         {
             headers: {
                 "x-auth-token": token
