@@ -1,3 +1,5 @@
 #1 divisione rotte su utente loggato e non loggato
 #2 spostare le chiamate sullo store
 #3 utilizzare variabili d'ambiente
+#4 creare classi per snellire le classi di tailwind
+#5 aggiungere nome utente su nav dopo login

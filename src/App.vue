@@ -9,10 +9,10 @@
     <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
       
       <div class="text-sm lg:flex-grow">
-        <router-link to="/" class="block lg:inline-block lg:mt-0 text-blue-200 hover:text-white mr-4">Login</router-link>
-        <router-link to="/signup" class="block lg:inline-block lg:mt-0 text-blue-200 hover:text-white mr-4">Sign up</router-link>
-        <router-link to="/users" class="block lg:inline-block lg:mt-0 text-blue-200 hover:text-white mr-4">Show Users</router-link>
-        <button type="submit" @click="logout"> Logout </button>
+        <router-link v-if = "!storeUser.isLogged" to="/" class="block lg:inline-block lg:mt-0 text-blue-200 hover:text-white mr-4">Login</router-link>
+        <router-link v-if = "!storeUser.isLogged" to="/signup" class="block lg:inline-block lg:mt-0 text-blue-200 hover:text-white mr-4">Sign up</router-link>
+        <router-link v-if = "storeUser.isLogged" to="/users" class="block lg:inline-block lg:mt-0 text-blue-200 hover:text-white mr-4">Show Users</router-link>
+        <button v-if = "storeUser.isLogged" type="submit" @click="logout()" class="block lg:inline-block lg:mt-0 text-blue-200 hover:text-white mr-4"> Logout </button>
       </div>
 
     </div>
@@ -41,10 +41,7 @@ export default {
   methods:{
 
     logout(){
-      this.storeUser.setToken('');
-      this.storeUser.setUsername('');
-      this.storeUser.setUserId('');
-
+      this.storeUser.logout();
       this.$router.push({ path: "/" })
     }
   }

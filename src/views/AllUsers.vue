@@ -17,7 +17,7 @@
 
 
       <div>
-        <table class="m-6 text-sm text-left text-gray-500 rounded-md center border-spacing-0">
+        <table class="m-6 text-sm text-left text-gray-500 rounded-md mr-auto ml-auto border-spacing-0">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr>
                     <th scope="col" class="px-6 py-3"> 
@@ -35,7 +35,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in usersReturned" :key="item.id" class="bg-white border-b">
+                <tr v-for="item in storeUser.getUsers" :key="item.id" class="bg-white border-b">
                     <td scope="row" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap">
                         {{ item.id }}
                     </td>
@@ -59,6 +59,7 @@
   <script>
   
   import axios from 'axios';
+  import { useUserStore} from '@/store/userStore';
   
   export default {
     name: 'AllUsers',
@@ -66,13 +67,14 @@
     data(){
           return {
               jwttoken: '', //v-model in template
-              usersReturned: [] //users returned by the API
+              usersReturned: [], //users returned by the API
+              storeUser: useUserStore()
           }
     },
 
 
     methods: {
-        onSubmit(e){
+        async onSubmit(e){
             e.preventDefault()
     
             if(!this.jwttoken){
@@ -81,35 +83,7 @@
             }
     
             console.log(this.jwttoken);
-            
-            axios.get(
-            "http://localhost:5000/users",
-            {
-                headers: {
-                    "x-auth-token": this.jwttoken
-                }
-            }
-            ).then(response =>{
-                console.log(response);
-                
-                this.usersReturned = response.data;
-            }
-            ).catch(error => {
-                
-                // Handle the error here
-                if (error.response) {
-                    // The request was made, but the server responded with a status code other than 2xx
-                    console.log('Response data:', error.response.data);
-                    console.log('Response status:', error.response.status);
-                } else if (error.request) {
-                    // The request was made, but no response was received
-                    console.log('No response received');
-                } else {
-                    // Something happened in setting up the request that triggered an error
-                    console.error('Error:', error.message);
-                }
-            });
-    
+            this.storeUser.allUsers(this.jwttoken);
             
             //clear the form
             this.username= '';
@@ -132,27 +106,7 @@
     }
     }
 
-    
   }
     
   </script>
-  
-  <style scoped>
-  .center {
-    margin-left: auto;
-    margin-right: auto;
-    }
-
-    table{
-    border:1px solid black;
-    }
-
-    table td{
-    border:1px solid black;
-    }
-
-    .deleteButton{
-        background-color: blue;
-    }
-  </style>
   

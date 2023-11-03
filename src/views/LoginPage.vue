@@ -33,7 +33,7 @@
   
   <script>
   
-  import axios from 'axios';
+  //import axios from 'axios';
   import { useUserStore} from '@/store/userStore';
   
   export default {
@@ -52,7 +52,7 @@
 
     methods: {
   
-      onSubmit(e){
+      async onSubmit(e){
         e.preventDefault()
   
         if(!this.username){
@@ -67,8 +67,14 @@
   
         console.log(this.username + ' ' + this.password);
   
-        
-        axios.post(
+        await this.storeUser.login(this.username, this.password);
+
+        if(this.storeUser.getToken != ''){
+
+          this.$router.push({ path: "/users" });
+        }
+
+        /* axios.post(
           "http://localhost:5000/",
           {
             username: this.username,
@@ -88,7 +94,7 @@
             this.$router.push({ path: "/users" })
           }
           }
-        );
+        ); */
   
         
         //clear the form
