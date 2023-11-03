@@ -69,13 +69,16 @@ export const useUserStore = defineStore({
             
             this.setUserData(response.data.token);
             console.log(response.data.token);
-            return true
+            return true;
           }
           else{
-            return false
+            return false;
           }
         }
-      );
+      ).catch( () =>{
+        //console.log(error);
+        alert('Invalid credentials');
+      });
     },
 
 

@@ -53,8 +53,7 @@
           return {
               username: '', //v-model in template
               password: '',
-              repeatedPassword: '',
-              userRegistered : false
+              repeatedPassword: ''
           }
       },
 
@@ -90,7 +89,7 @@
   
         
         axios.post(
-          "http://localhost:5000/signup",
+          process.env.VUE_APP_BACKEND_URL + 'signup',
           {
             username: this.username,
             password: this.password
@@ -101,10 +100,14 @@
             }
           }
         ).then(response =>{
-          console.log(response);
-          this.userRegistered = true;
-        }
-        );
+            console.log(response);
+            alert('Registrazione effettuata');
+            this.$router.push('/');
+
+          } 
+        ).catch( () => {
+          alert('Username già esistente');
+        });
   
         
         //clear the form
