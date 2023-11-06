@@ -4,7 +4,7 @@
       
       
   
-      <form @submit.prevent="onSubmit" v-if="!storeUser.isLogged">
+      <form @submit.prevent="onSubmit" v-if="!storeUser.isLogged()">
         <h1 class="mt-5">Login</h1>
         <div class="form-group">
             <label for="username">
@@ -28,7 +28,7 @@
         <button type="submit" class="btn btn-success">Login</button>
       </form>
       <br>
-      <div v-if="storeUser.isLogged">
+      <div v-if="storeUser.isLogged()">
         <p>Your token JWT is <br> {{ storeUser.getToken }}</p>
       </div>
     </div>

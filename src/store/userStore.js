@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
-import { useStorage } from '@vueuse/core'
+import {useStorage}  from '@vueuse/core'
 import {Buffer} from 'buffer'
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
 
 
 
@@ -35,7 +36,7 @@ export const useUserStore = defineStore({
       const jwtParsed = this.parseJwt(token);
       console.log('token parsed : ');
       console.log(jwtParsed);
-      this.setUsername(jwtParsed.name);
+      this.setUsername(jwtParsed.username);
       this.setToken(token);
     },
 
@@ -46,6 +47,18 @@ export const useUserStore = defineStore({
       this.usersReturnedByAPI=[];
     },
 
+    isLogged(){
+      console.log('inside isLogged, is logged is: ');
+
+        if (this.jwt != ''){
+        
+          console.log( Date.now() < (jwtDecode( this.jwt).exp * 1000 ));
+          return Date.now() < (jwtDecode( this.jwt).exp * 1000 );
+        }
+        
+        
+        return false;
+    },
 
     //CHIAMATE AL BACKEND
     login(_username, _password){
@@ -133,11 +146,20 @@ export const useUserStore = defineStore({
         return state.username;
     },
 
-    isLogged: (state) => {
-        console.log( 'STAMPA JWT LOCALSTORAGE' + localStorage.getItem('jwt') );
-        console.log('STAMPA JWT STATO PINIA' + state.jwt)
-        return state.jwt != '';
-    },
+    /* isLogged: (state) => {
+      console.log('inside isLogged, is logged is: ');
+
+        if (state.jwt != ''){
+        
+          console.log( Date.now() < (jwtDecode( state.jwt).exp * 1000 ));
+          return Date.now() < (jwtDecode( state.jwt).exp * 1000 );
+        }
+        
+        
+        return false;
+        
+    
+    }, */
 
     getListOfUsers(state){
       return state.usersReturnedByAPI;

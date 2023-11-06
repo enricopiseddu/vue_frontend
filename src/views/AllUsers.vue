@@ -66,17 +66,24 @@
         async onSubmit(e){
             e.preventDefault()
     
+            console.log('is logged from form ' + this.storeUser.isLogged)
+
             if(!this.jwttoken){
                 alert('Please insert a token')
                 return
             }
+
+            if(!this.storeUser.isLogged()){
+              alert('Session expired. Please log in');
+              this.$router.push('/');
+            }
     
-            console.log(this.jwttoken);
+            //console.log(this.jwttoken);
 
 
             await this.storeUser.getAllUsers(this.jwttoken);
 
-            console.log(this.storeUser.getAllUsers);
+            //console.log(this.storeUser.getAllUsers);
                       
             //clear the form
             this.username= '';
@@ -87,16 +94,21 @@
         deleteUser(idToDelete){
         console.log('vuoi cancellare l utente ' + idToDelete);
 
-        axios.delete(
-            process.env.VUE_APP_BACKEND_URL + 'users/' + idToDelete,
-            {
-            }
-            ).then(response =>{
-                console.log(response);
-            }
-            )
-
-    }
+        if(this.storeUser.isLogged()){
+            axios.delete(
+                process.env.VUE_APP_BACKEND_URL + 'users/' + idToDelete,
+                {
+                }
+                ).then(response =>{
+                    console.log(response);
+                })
+        }
+        else{
+          alert('Session expired. Please log in');
+          this.$router.push('/');
+         
+        }
+  }
     }
 
     

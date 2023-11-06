@@ -16,20 +16,20 @@
     >
       <!-- Left links -->
       <ul class="navbar-nav mb-2 mb-lg-0">
-        <li v-if="storeUser.isLogged" class="nav-item">
+        <li v-if="storeUser.isLogged()" class="nav-item">
             <div class="nav-link active" aria-current="page" to="/">Benvenuto, {{ storeUser.getUsername }}</div>
         </li>
-        <li  class="nav-item" v-if="!storeUser.isLogged">
+        <li  class="nav-item" v-if="!storeUser.isLogged()">
             <router-link class="nav-link active" aria-current="page" to="/">Login</router-link>
         </li>
-        <li  class="nav-item" v-if="!storeUser.isLogged">
+        <li  class="nav-item" v-if="!storeUser.isLogged()">
             <router-link class="nav-link active" aria-current="page" to="/signup">Signup</router-link>
         </li>
-        <li class="nav-item" v-if="storeUser.isLogged">
+        <li class="nav-item" v-if="storeUser.isLogged()">
             <router-link class="nav-link active" aria-current="page" to="/users">See all users</router-link>
         </li>
 
-        <li class="nav-item" v-if = "storeUser.isLogged">
+        <li class="nav-item" v-if = "storeUser.isLogged()">
             <button class="btn btn-secondary" @click="logout">Logout</button>
         </li>
       </ul>
