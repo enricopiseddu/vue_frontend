@@ -68,11 +68,13 @@
         console.log(this.username + ' ' + this.password);
   
         await this.storeUser.login(this.username, this.password);
+        
+        console.log("If isLogged: " + this.storeUser.isLogged);
 
-        if(this.storeUser.getToken != ''){
-
+        /* if (this.storeUser.isLogged){
+          console.log("Vai a users");
           this.$router.push({ path: "/users" });
-        }
+        } */
 
         //clear the form
         this.username= '';

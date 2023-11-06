@@ -80,7 +80,9 @@
   
         
         axios.post(
+          /* "http://localhost:5000/signup", */
           `${process.env.VUE_APP_BACKEND_URL}/signup`,
+          /* process.env.VUE_APP_BACKEND_URL + "signup", */
           {
             username: this.username,
             password: this.password
@@ -95,8 +97,8 @@
           alert("Ti sei registrato con successo!");
           this.$router.push({ path: "/" });
 
-        }
-        ).catch(() =>{
+        
+        }).catch(() =>{
           alert("Username già esistente")
         });
   

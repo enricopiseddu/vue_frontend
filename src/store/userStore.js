@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { useStorage } from '@vueuse/core'
 import axios from 'axios';
+import { jwtDecode } from "jwt-decode";
 
 export const useUserStore = defineStore({
     id:'userStore',
@@ -8,7 +9,8 @@ export const useUserStore = defineStore({
       jwt : useStorage('jwt', ''),
       userId: useStorage('userId', ''),
       username: useStorage('username', ''),
-      users: useStorage('users', [])
+      users: useStorage('users', []),
+      exp: useStorage('exp', 0)
     }),
     actions: {
       setToken(_jwt){
@@ -26,9 +28,34 @@ export const useUserStore = defineStore({
       setUsers(_users){
         this.users = _users;
       },
+
+      setExp(_exp){
+        this.exp = _exp;
+      },
+
+      parseJwt (token) {
+        //console.log('dentro parse jwt');
+        //const parse = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
+        //console.log(parse);
+        const decoded = jwtDecode(token);
+        return decoded;
+      },
+
+      setUserData(token){
+        //this.setToken(token);
+        //console.log('Entra');
+        const jwtParsed = this.parseJwt(token);
+        //console.log('token parsed : ');
+        //console.log(jwtParsed);
+        this.setToken(token);
+        this.setUsername(jwtParsed.name);
+        this.setExp(jwtParsed.exp);
+        //console.log(jwtParsed.exp);
+      },
       
       async login(username, password){
         axios.post(
+          /* process.env.VUE_APP_BACKEND_URL, */
           `${process.env.VUE_APP_BACKEND_URL}/`,
           {
             username: username,
@@ -40,22 +67,29 @@ export const useUserStore = defineStore({
             }
           }
         ).then(response =>{
-          console.log(response);
+          //console.log("output" + response);
           
           if(response.data.token != undefined){
             
-            this.setToken(response.data.token);
-            //this.$router.push({ path: "/users" })
+            //const jwtParsed = this.parseJwt(token);
+            //this.setUsername(jwtParsed.name);
+            //this.setToken(response.data.token);
+            this.setUserData(response.data.token);
+            //this.$router.push({ path: "/users" });
+            //alert("Hai fatto l'accesso con successo!");
+
+            console.log("Accesso");
+            this.router.push({ path: "/users" });
             
           }
-          }
-        ).catch(() =>{
+        })/* .catch(() =>{
             alert("Credenziali non valide");
-        });
+        }) */;
       },
 
       allUsers(token){
         axios.get(
+          /* process.env.VUE_APP_BACKEND_URL + "users", */
           `${process.env.VUE_APP_BACKEND_URL}/users`,
           {
               headers: {
@@ -90,6 +124,7 @@ export const useUserStore = defineStore({
         this.setUsername('');
         this.setUserId('');
         this.setUsers([]);
+        this.setExp(0);
       }
 
     },
@@ -109,10 +144,20 @@ export const useUserStore = defineStore({
 
         getUsers: (state) => {
           return state.users;
-      },
+        },
+
+        getExp: (state) => {
+          return state.exp;
+        },
 
         isLogged: (state) =>{
-            return state.jwt != '';
+          console.log("isLogged: " + state.exp);
+          if (state.exp >= (new Date().getTime() + 1) / 1000) {
+            return true;
+          }
+          else{
+            return false;
+          }
         },
       }
 })
