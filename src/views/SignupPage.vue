@@ -62,7 +62,7 @@
 
     methods: {
   
-      onSubmit(e){
+      async onSubmit(e){
         e.preventDefault()
   
         if(!this.username){
@@ -88,7 +88,7 @@
         console.log(this.username + ' ' + this.password);
   
         
-        axios.post(
+        /* axios.post(
           process.env.VUE_APP_BACKEND_URL + 'signup',
           {
             username: this.username,
@@ -105,9 +105,36 @@
             this.$router.push('/');
 
           } 
-        ).catch( () => {
-          alert('Username già esistente');
-        });
+        ).catch( (error) => {
+          alert(error.response.data);
+        }); */
+        try{
+          const response = await axios.post(
+            process.env.VUE_APP_BACKEND_URL + 'signup',
+            {
+              username: this.username,
+              password: this.password
+            },
+            {
+              headers: {
+                "Content-type": "application/json; charset=UTF-8",
+              }
+            }
+          )
+
+          alert(response.data);
+          this.$router.push('/');
+
+        } catch ( error ){
+          console.log(error.code);
+          if(error.code === "ERR_BAD_REQUEST"){
+            alert('User already registered')
+          }else{
+            alert('Internal server error');
+          }
+        }
+
+
   
         
         //clear the form

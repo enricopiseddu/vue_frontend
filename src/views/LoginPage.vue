@@ -55,8 +55,8 @@
 
     methods: {
 
-      async onSubmit(e){
-        e.preventDefault()
+      async onSubmit(){
+        
 
         if(!this.username){
             alert('Please insert username')
@@ -71,9 +71,11 @@
         console.log('data from the form:' +this.username + ' ' + this.password);
   
         
-        const logged = await this.storeUser.login(this.username, this.password);
+        var logged = await this.storeUser.login(this.username, this.password);
 
-        if(logged){
+        console.log('logged is ', logged)
+        if(logged===true){
+          console.log('redirect to users');
           this.$router.push('/users');
         }
         

@@ -34,7 +34,7 @@
                 <tr v-for="item in storeUser.getListOfUsers" :key="item.id">
                     <th scope="row">{{ item.id }}</th>
                     <td>{{ item.username }}</td>
-                    <td>{{ item.password }}</td>
+                    <td>{{ item.hashedPassword }}</td>
                     <td> <button class="btn btn-danger" @click="deleteUser(item.id)">Elimina</button></td>
                 </tr>
             </tbody>
@@ -50,6 +50,7 @@
   import axios from 'axios';
   import { useUserStore} from '@/store/userStore';
 
+
   export default {
     name: 'AllUsers',
 
@@ -63,11 +64,8 @@
 
 
     methods: {
-        async onSubmit(e){
-            e.preventDefault()
-    
-            console.log('is logged from form ' + this.storeUser.isLogged)
-
+        async onSubmit(){
+              
             if(!this.jwttoken){
                 alert('Please insert a token')
                 return
@@ -91,24 +89,37 @@
             
         },
 
-        deleteUser(idToDelete){
-        console.log('vuoi cancellare l utente ' + idToDelete);
+        async deleteUser(idToDelete){
+          
 
-        if(this.storeUser.isLogged()){
-            axios.delete(
-                process.env.VUE_APP_BACKEND_URL + 'users/' + idToDelete,
-                {
-                }
-                ).then(response =>{
-                    console.log(response);
-                })
+          if(this.storeUser.isLogged()){
+
+            if(confirm('Vuoi cancellare l\'utente con id ' + idToDelete + ' ?')){
+
+              try{
+                const response = await axios.delete(
+                    process.env.VUE_APP_BACKEND_URL + 'users/' + idToDelete,
+                    {}
+                )
+                console.log(response)
+                alert('Utente cancellato correttamente.')
+              }catch( error ){
+                  if (error.code === "ERR_BAD_RESPONSE"){
+                    alert('Internal error')
+                  }
+                  else{
+                    alert(error.data)
+                  }
+ 
+              }
+                
+            }
+            else{
+              alert('Session expired. Please log in');
+              this.$router.push('/');
+          }
         }
-        else{
-          alert('Session expired. Please log in');
-          this.$router.push('/');
-         
         }
-  }
     }
 
     
