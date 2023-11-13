@@ -29,9 +29,19 @@
             <router-link class="nav-link active" aria-current="page" to="/users">See all users</router-link>
         </li>
 
+        <li class="nav-item" v-if="storeUser.isLogged()">
+            <router-link class="nav-link active" aria-current="page" to="/posts">See all posts</router-link>
+        </li>
+
+        <li class="nav-item" v-if="storeUser.isLogged()">
+            <router-link class="nav-link active" aria-current="page" to="/newPost">Create a post</router-link>
+        </li>
+
         <li class="nav-item" v-if = "storeUser.isLogged()">
             <button class="btn btn-secondary" @click="logout">Logout</button>
         </li>
+
+
       </ul>
       <!-- Left links -->
     </div>

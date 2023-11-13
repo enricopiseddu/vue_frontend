@@ -4,6 +4,9 @@ import LoginPage from "@/views/LoginPage.vue";
 import SignupPage from "@/views/SignupPage.vue";
 import PageNotFound from "@/views/PageNotFound.vue"
 import AllUsers from "@/views/AllUsers.vue"
+import PostsPage from "@/views/PostsPage.vue"
+import NewPostPage from "@/views/NewPostPage"
+
 
 import {useUserStore} from "../store/userStore"
 
@@ -38,6 +41,36 @@ const routes = [
     beforeEnter: (to, from, next) => {
 
       //console.log('jwt token is ' + useUserStore().getToken);
+
+      if (useUserStore().isLogged()) {
+        next(); // Consenti l'accesso
+      } else {
+        next('/'); // Reindirizza all'area di login
+      }
+    }
+  },
+
+  {
+    path: "/posts",
+    name: "Posts",
+    component: PostsPage,
+    beforeEnter: (to, from, next) => {
+
+
+      if (useUserStore().isLogged()) {
+        next(); // Consenti l'accesso
+      } else {
+        next('/'); // Reindirizza all'area di login
+      }
+    }
+  },
+
+  {
+    path: "/newPost",
+    name: "NewPostForm",
+    component: NewPostPage,
+    beforeEnter: (to, from, next) => {
+
 
       if (useUserStore().isLogged()) {
         next(); // Consenti l'accesso
