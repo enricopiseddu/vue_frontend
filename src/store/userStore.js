@@ -28,6 +28,10 @@ export const useUserStore = defineStore({
         this.username = _username;  
     },
 
+    setUserId(_userId){
+      this.userId = _userId
+    },
+
     parseJwt (token) {
       return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
     },
@@ -37,13 +41,16 @@ export const useUserStore = defineStore({
       console.log('token parsed : ');
       console.log(jwtParsed);
       this.setUsername(jwtParsed.username);
+      this.setUserId(jwtParsed.userId);
       this.setToken(token);
     },
 
     logout(){
+      //clean the localstorage
       this.setToken('');
       this.setUsername('');
       this.setUser('');
+      this.setUserId('');
       this.usersReturnedByAPI=[];
     },
 
