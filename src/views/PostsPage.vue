@@ -6,8 +6,9 @@
       <div v-for="post in this.posts.data" :key="post.id">
         <hr>
           <h3>{{post.title}}</h3>
-          <h5>Author: {{post.user.username}} - Date: {{post.date}}</h5>
-          <p> {{ post.notes }}</p>
+          <h5>Author: {{post.user.username}} - Date: {{ this.printDate(post.date) }}</h5>
+          <!-- <p> {{ post.notes }}</p> -->
+          <div v-html="post.notes"> </div>
         <hr>
       </div>
           
@@ -47,7 +48,17 @@
     },
 
     methods: {
+      printDate(_date){
+        const day = new Date(_date).getDay();
+        const month = new Date(_date).getMonth();
+        const year = new Date(_date).getFullYear();
 
+        const hours = new Date(_date).getHours();
+        const mins = new Date(_date).getMinutes();
+
+        return day + "/" + month + "/" + year + " at " + hours + ":" + mins;
+
+      }
       
     }
   }

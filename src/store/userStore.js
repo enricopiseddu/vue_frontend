@@ -120,7 +120,37 @@ export const useUserStore = defineStore({
         console.log(error)
           alert('Error ' + error.response.status + ' ' + error.response.data);
        }
-  }
+    },
+
+    //CHIAMATE AL BACKEND
+    async publishPost(_title, _notes){
+
+      try{
+          await axios.post(
+          process.env.VUE_APP_BACKEND_URL + 'posts/newPost',
+          { //body
+            title: _title,
+            notes: _notes
+          },
+          {
+            headers: {
+              "x-auth-token": this.jwt,
+            }
+          }
+        );
+
+        alert('Post published');
+      } catch (error){
+          console.log(error)
+
+          if(error.code === 'ERR_NETWORK'){
+            alert('Server error')
+          }else{
+            alert('Error ' + error.response.status + ' ' + error.response.data)
+          }
+          return false;
+      }
+    }
 },
 
 

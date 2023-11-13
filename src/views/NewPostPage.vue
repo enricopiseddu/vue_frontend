@@ -17,7 +17,7 @@
           <div class="col-md-6 mx-auto">
             <div class="form-group">
               <label for="notes">Notes</label>
-              <textarea class="form-control" id="notes" rows="10" placeholder="Your text" v-model="notes"></textarea>
+              <Editor v-model="notes"/>
             </div>
           </div>
         </div>
@@ -32,27 +32,33 @@
   <script>
   
   import { useUserStore} from '@/store/userStore';
- 
+  import Editor from '@tinymce/tinymce-vue';
   
   
   export default {
     name: 'NewPostpage',
+
     data(){
           return {
               title: '', //v-model in template
               notes: '',
-              storeUser : useUserStore()
+              storeUser : useUserStore(),
+              
+              tinyOptions: {
+                    'height': 500
+            }
           }
+    },
+
+    components:{
+        Editor
     },
 
     props: {
     },
 
     methods: {
-        onSumbit(){
-            
-            console.log('click on form')
-
+        async onSumbit(){
             if(!this.title){
                 alert('Please insert a title');
                 return
@@ -63,8 +69,13 @@
                 alert('Please insert notes');
                 return
             }
-             console.log('check ok')
-        }
+
+            if (confirm("Vuoi pubblicare il post?")){    
+                await this.storeUser.publishPost(this.title, this.notes);
+            }
+        },
+
+        
       
     }
   }
@@ -74,6 +85,6 @@
   
   <style scoped>
   @import 'bootstrap/dist/css/bootstrap.css';
-  
+
 
    </style>
