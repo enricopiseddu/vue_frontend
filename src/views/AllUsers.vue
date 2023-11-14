@@ -3,7 +3,7 @@
 
       <h1 class="mt-5">All users</h1>
       
-      <form @submit.prevent="onSubmit">
+      <!-- <form @submit.prevent="onSubmit">
         
         <div>
             <label>
@@ -19,7 +19,7 @@
         <button type="submit" class="btn btn-secondary">Send token</button>
       </form>
   
-    <br> 
+    <br>  -->
     
         <table class="table">
             <thead>
@@ -27,7 +27,6 @@
                     <th scope="col">ID</th>
                     <th scope="col">Username</th>
                     <th scope="col">Hashed password</th>
-                    <th scope="col">Azioni</th>
                 </tr>
             </thead>
             <tbody>
@@ -35,7 +34,6 @@
                     <th scope="row">{{ item.id }}</th>
                     <td>{{ item.username }}</td>
                     <td>{{ item.hashedPassword }}</td>
-                    <td> <button class="btn btn-danger" @click="deleteUser(item.id)">Elimina</button></td>
                 </tr>
             </tbody>
         </table>
@@ -47,8 +45,9 @@
   
   <script>
   
-  import axios from 'axios';
+  
   import { useUserStore} from '@/store/userStore';
+ 
 
 
   export default {
@@ -62,9 +61,17 @@
           }
     },
 
+    async mounted(){
+      if(!this.storeUser.isLogged()){
+         alert('Session expired. Please log in');
+         this.$router.push('/');
+      }
+      
+      this.usersReturned = await this.storeUser.getAllUsers();
+    },
 
     methods: {
-        async onSubmit(){
+        /* async onSubmit(){
               
             if(!this.jwttoken){
                 alert('Please insert a token')
@@ -87,9 +94,9 @@
             this.username= '';
             this.password= '';
             
-        },
+        }, */
 
-        async deleteUser(idToDelete){
+        /* async deleteUser(idToDelete){
           
 
           if(this.storeUser.isLogged()){
@@ -119,7 +126,7 @@
               this.$router.push('/');
           }
         }
-        }
+        } */
     }
 
     
@@ -128,5 +135,7 @@
   </script>
   
   <style scoped>
-
+ 
+  @import 'bootstrap/dist/css/bootstrap.css';
+  
   </style>

@@ -1,6 +1,8 @@
 <template>
     <div id="app" class="text-center">
 
+      <h1 class="mt-5">New Post</h1>
+
       <form @submit.prevent="onSumbit" class="my-4">
         <div class="row">
           <div class="col-md-6 mx-auto">

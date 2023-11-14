@@ -103,13 +103,13 @@ export const useUserStore = defineStore({
     },
 
 
-    async getAllUsers(token){
+    async getAllUsers(){
        try{
           const response = await axios.get(
             process.env.VUE_APP_BACKEND_URL + 'users',
               {
                   headers: {
-                      "x-auth-token": token
+                      "x-auth-token": this.jwt
                   }
               }
           )
@@ -181,7 +181,46 @@ export const useUserStore = defineStore({
           }
           return false;
       }
+    },
+
+
+    async getPersonalPosts(){
+      try{
+         const response = await axios.get(
+           process.env.VUE_APP_BACKEND_URL + 'posts/personal',
+             {
+                 headers: {
+                     "x-auth-token": this.jwt
+                 }
+             }
+         )
+         console.log(response)
+         return response.data;
+
+      }catch( error ) {
+       console.log(error)
+         alert('Error ' + error.response.status + ' ' + error.response.data);
+      }
+   },
+
+   async deletePost(_idPostToDelete){
+    try{
+       const response = await axios.delete(
+         process.env.VUE_APP_BACKEND_URL + 'posts/delete/' + _idPostToDelete,
+           {
+               headers: {
+                   "x-auth-token": this.jwt
+               }
+           }
+       )
+       console.log(response)
+       return response.data;
+
+    }catch( error ) {
+     console.log(error)
+       alert('Error ' + error.response.status + ' ' + error.response.data);
     }
+ },
 },
 
 

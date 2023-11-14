@@ -36,15 +36,12 @@
     },
 
     async mounted(){
-      console.log('mounted')
       if(!this.storeUser.isLogged()){
               alert('Session expired. Please log in');
               this.$router.push('/');
-            }
+      }
       
       this.posts = await axios.get(process.env.VUE_APP_BACKEND_URL + 'posts/all')
-      console.log(this.posts.data);
-      console.log(this.posts.data[0])
     },
 
     methods: {
