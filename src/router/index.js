@@ -6,6 +6,7 @@ import PageNotFound from "@/views/PageNotFound.vue"
 import AllUsers from "@/views/AllUsers.vue"
 import PostsPage from "@/views/PostsPage.vue"
 import NewPostPage from "@/views/NewPostPage"
+import NewPasswordPage from "@/views/NewPasswordPage"
 
 
 import {useUserStore} from "../store/userStore"
@@ -71,6 +72,20 @@ const routes = [
     component: NewPostPage,
     beforeEnter: (to, from, next) => {
 
+
+      if (useUserStore().isLogged()) {
+        next(); // Consenti l'accesso
+      } else {
+        next('/'); // Reindirizza all'area di login
+      }
+    }
+  },
+
+  {
+    path: "/updatePassword",
+    name: "NewPasswordForm",
+    component: NewPasswordPage,
+    beforeEnter: (to, from, next) => {
 
       if (useUserStore().isLogged()) {
         next(); // Consenti l'accesso

@@ -150,6 +150,37 @@ export const useUserStore = defineStore({
           }
           return false;
       }
+    },
+
+
+    //CHIAMATE AL BACKEND
+    async updatePassword(_actualPassword, _newPassword){
+
+      try{
+          await axios.put(
+          process.env.VUE_APP_BACKEND_URL + 'profile/updatePassword',
+          { //body
+            actualPassword: _actualPassword,
+            newPassword: _newPassword
+          },
+          {
+            headers: {
+              "x-auth-token": this.jwt,
+            }
+          }
+        );
+
+        alert('Password updated correctly');
+      } catch (error){
+          console.log(error)
+
+          if(error.code === 'ERR_NETWORK'){
+            alert('Server error')
+          }else{
+            alert('Error ' + error.response.status + ' ' + error.response.data)
+          }
+          return false;
+      }
     }
 },
 

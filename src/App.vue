@@ -19,6 +19,7 @@
         <li v-if="storeUser.isLogged()" class="nav-item">
             <div class="nav-link active" aria-current="page" to="/">Benvenuto, {{ storeUser.getUsername }}</div>
         </li>
+        
         <li  class="nav-item" v-if="!storeUser.isLogged()">
             <router-link class="nav-link active" aria-current="page" to="/">Login</router-link>
         </li>
@@ -35,6 +36,10 @@
 
         <li class="nav-item" v-if="storeUser.isLogged()">
             <router-link class="nav-link active" aria-current="page" to="/newPost">Create a post</router-link>
+        </li>
+
+        <li  class="nav-item" v-if="storeUser.isLogged()">
+            <router-link class="nav-link active" aria-current="page" to="/updatePassword">Update Password</router-link>
         </li>
 
         <li class="nav-item" v-if = "storeUser.isLogged()">
