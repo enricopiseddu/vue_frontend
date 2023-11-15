@@ -3,17 +3,31 @@
 
       <h1 class="mt-5">Public posts</h1>
 
-      <div v-for="post in this.posts.data" :key="post.id">
-        <hr>
-          <h3>{{post.title}}</h3>
-          <h5>Author: {{post.user.username}} - Date: {{ this.printDate(post.date) }}</h5>
-          <!-- <p> {{ post.notes }}</p> -->
-          <div v-html="post.notes"> </div>
-        <hr>
-      </div>
-          
-  
-      
+      <button @click="paginaPrecedente" :disabled="paginaCorrente === 1" type="button" class="btn btn-dark"> Prev </button>
+        <span class="border">{{ paginaCorrente }}</span>
+      <button @click="paginaSuccessiva" :disabled="paginaCorrente === totalePagine" type="button" class="btn btn-dark"> Next </button>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Content</th>
+            <th scope="col">Creation</th>
+            <th scope="col">Published by</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr v-for="post in posts" :key="post.id">
+            <th scope="row">{{ post.title }}</th>
+            <td> <div v-html="post.notes"></div> </td>
+            <td>{{ this.printDate(post.date) }}</td>
+
+            <td>{{ post.user.username }}</td>
+          </tr>
+        </tbody>
+      </table>
+
     </div>
 </template>
   
@@ -28,6 +42,9 @@
     data(){
           return {
               posts: [],
+              paginaCorrente: 1,
+              totalePagine: 10,
+              limiteElementiTabella: 3,
               storeUser : useUserStore()
           }
     },
@@ -41,22 +58,64 @@
               this.$router.push('/');
       }
       
-      this.posts = await axios.get(process.env.VUE_APP_BACKEND_URL + 'posts/all')
+      const res = await axios.get(process.env.VUE_APP_BACKEND_URL + 'posts/paginated',
+            {
+              params:{ //uso dei parametri di query perché la richiesta è una GET
+                page: 1,
+                perPage: this.limiteElementiTabella
+              }
+            }
+      );
+
+      this.posts = res.data.posts;
+      
+      //limita il totale delle pagine
+      this.totalePagine = Math.ceil(res.data.numberOfPosts / this.limiteElementiTabella);
     },
 
     methods: {
       printDate(_date){
-        const day = new Date(_date).getDay();
-        const month = new Date(_date).getMonth();
+        const day = new Date(_date).getUTCDate();
+        const month = new Date(_date).getMonth() + 1;
         const year = new Date(_date).getFullYear();
 
-        const hours = new Date(_date).getHours();
-        const mins = new Date(_date).getMinutes();
+        let hours = new Date(_date).getHours();
+        let mins = new Date(_date).getMinutes();
+
+        //adjust format
+        if (hours < 10){ hours = "0" + hours}
+        if (mins  < 10){ mins = "0" + mins}
 
         return day + "/" + month + "/" + year + " at " + hours + ":" + mins;
 
-      }
+      },
       
+      async paginaPrecedente(){
+        this.paginaCorrente --;
+        const res = await axios.get(process.env.VUE_APP_BACKEND_URL + 'posts/paginated',
+            {
+              params:{ //uso dei parametri di query perché la richiesta è una GET
+                page: this.paginaCorrente,
+                perPage: this.limiteElementiTabella
+              }
+            }
+        );
+        this.posts = res.data.posts;
+      },
+
+      async paginaSuccessiva(){
+        this.paginaCorrente ++;
+        const res = await axios.get(process.env.VUE_APP_BACKEND_URL + 'posts/paginated',
+            {
+              params:{ //uso dei parametri di query perché la richiesta è una GET
+                page: this.paginaCorrente,
+                perPage: this.limiteElementiTabella
+              }
+            } 
+        );
+        
+        this.posts = res.data.posts;
+      }
     }
   }
   </script>
