@@ -3,9 +3,16 @@
 
       <h1 class="mt-5">Public posts</h1>
 
-      <button @click="paginaPrecedente" :disabled="paginaCorrente === 1" type="button" class="btn btn-dark"> Prev </button>
-        <span class="border">{{ paginaCorrente }}</span>
-      <button @click="paginaSuccessiva" :disabled="paginaCorrente === totalePagine" type="button" class="btn btn-dark"> Next </button>
+      <div class="row justify-content-center mx-auto w-25">
+        <div class="input-group">
+          <input type="search" class="form-control rounded" placeholder="Search content" aria-label="Search" aria-describedby="search-addon" v-model="querySearch" />
+          <button @click="searchPosts" type="button" class="btn btn-outline-primary">Search</button>
+        </div>
+      </div>
+      
+    
+    
+    
 
       <table class="table">
         <thead>
@@ -28,6 +35,20 @@
         </tbody>
       </table>
 
+      <br>
+
+      <button @click="paginaPrecedente" :disabled="paginaCorrente === 1" type="button" class="btn btn-dark"> Prev </button>
+        <span class="border">{{ paginaCorrente }}</span>
+      <button @click="paginaSuccessiva" :disabled="paginaCorrente === totalePagine" type="button" class="btn btn-dark"> Next </button>
+
+      <br>
+      <p>Limita risultati per pagina</p>
+      <select class="form-select mx-auto w-25 mt-2 mb-2" aria-label="Default select example" v-model="limiteElementiTabella">
+        <option value=2>2 risultati per pagina</option>
+        <option value=4>4 risultati per pagina</option>
+        <option value=6>6 risultati per pagina</option>
+    </select>
+
     </div>
 </template>
   
@@ -45,6 +66,7 @@
               paginaCorrente: 1,
               totalePagine: 10,
               limiteElementiTabella: 3,
+              querySearch : '',
               storeUser : useUserStore()
           }
     },
@@ -101,6 +123,8 @@
             }
         );
         this.posts = res.data.posts;
+        //limita il totale delle pagine
+        this.totalePagine = Math.ceil(res.data.numberOfPosts / this.limiteElementiTabella);
       },
 
       async paginaSuccessiva(){
@@ -115,6 +139,25 @@
         );
         
         this.posts = res.data.posts;
+        //limita il totale delle pagine
+      this.totalePagine = Math.ceil(res.data.numberOfPosts / this.limiteElementiTabella);
+      },
+
+
+      async searchPosts(){
+        //console.log('click on search with value ', this.querySearch);
+
+        const results = await axios.get(process.env.VUE_APP_BACKEND_URL + 'posts/search',
+            {
+              params:{ //uso dei parametri di query perché la richiesta è una GET
+                string: this.querySearch,
+              }
+            }
+        );
+        
+        console.log(results);
+
+        this.posts = results.data
       }
     }
   }

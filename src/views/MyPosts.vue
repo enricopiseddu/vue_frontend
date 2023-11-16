@@ -15,7 +15,7 @@
                 <tr v-for="post in this.personalPosts" :key="post.id">
                     <th scope="row">{{ post.title }}</th>
                     <td> <div v-html="post.notes"></div> </td>
-                    <td>{{ post.date }}</td>
+                    <td>{{ printDate(post.date) }}</td>
                     <td> <button class="btn btn-danger" @click="deletePost(post.id)">Delete</button></td>
                 </tr>
             </tbody>
@@ -49,6 +49,21 @@
     },
 
     methods: {
+        printDate(_date){
+        const day = new Date(_date).getUTCDate();
+        const month = new Date(_date).getMonth() + 1;
+        const year = new Date(_date).getFullYear();
+
+        let hours = new Date(_date).getHours();
+        let mins = new Date(_date).getMinutes();
+
+        //adjust format
+        if (hours < 10){ hours = "0" + hours}
+        if (mins  < 10){ mins = "0" + mins}
+
+        return day + "/" + month + "/" + year + " at " + hours + ":" + mins;
+
+      },
         async deletePost(_id){
 
         if(confirm('Vuoi cancellare il post?'))
