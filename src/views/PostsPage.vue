@@ -10,10 +10,6 @@
         </div>
       </div>
       
-    
-    
-    
-
       <table class="table">
         <thead>
           <tr>
@@ -82,6 +78,9 @@
       
       const res = await axios.get(process.env.VUE_APP_BACKEND_URL + 'posts/paginated',
             {
+              headers: {
+                     "x-auth-token": this.storeUser.jwt
+              },
               params:{ //uso dei parametri di query perché la richiesta è una GET
                 page: 1,
                 perPage: this.limiteElementiTabella
@@ -116,6 +115,9 @@
         this.paginaCorrente --;
         const res = await axios.get(process.env.VUE_APP_BACKEND_URL + 'posts/paginated',
             {
+              headers: {
+                     "x-auth-token": this.storeUser.jwt
+              },
               params:{ //uso dei parametri di query perché la richiesta è una GET
                 page: this.paginaCorrente,
                 perPage: this.limiteElementiTabella
@@ -131,6 +133,9 @@
         this.paginaCorrente ++;
         const res = await axios.get(process.env.VUE_APP_BACKEND_URL + 'posts/paginated',
             {
+              headers: {
+                     "x-auth-token": this.storeUser.jwt
+              },
               params:{ //uso dei parametri di query perché la richiesta è una GET
                 page: this.paginaCorrente,
                 perPage: this.limiteElementiTabella
@@ -140,7 +145,7 @@
         
         this.posts = res.data.posts;
         //limita il totale delle pagine
-      this.totalePagine = Math.ceil(res.data.numberOfPosts / this.limiteElementiTabella);
+        this.totalePagine = Math.ceil(res.data.numberOfPosts / this.limiteElementiTabella);
       },
 
 
@@ -149,7 +154,11 @@
 
         const results = await axios.get(process.env.VUE_APP_BACKEND_URL + 'posts/search',
             {
-              params:{ //uso dei parametri di query perché la richiesta è una GET
+              headers: {
+                     "x-auth-token": this.storeUser.jwt
+              },
+             
+              params: { //uso dei parametri di query perché la richiesta è una GET
                 string: this.querySearch,
               }
             }
@@ -165,7 +174,11 @@
   
   <style scoped>
   @import 'bootstrap/dist/css/bootstrap.css';
-  
+
+  /* altezza righe tabella */
+  .table tbody tr {
+    height: 80px; 
+  }
 
    </style>
   
